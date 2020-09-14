@@ -1,0 +1,57 @@
+﻿@model LabourReporting.ViewModels.WorkstationOperatorNcrtagViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+    <div class="col-12 justify-content-center">
+        <div class="text-right pt-1 px-3">
+            <a asp-controller="Workstations" asp-action="create">  <i class="fas fa-plus fa-lg text-primary">Add</i></a>
+        </div>
+        @foreach (var item in Model.WorkStations)
+        {
+            <ul>
+                <li>@item.WorkStationId</li>
+                <li>@item.WorkStationName</li>
+
+            </ul>
+        }
+
+
+        @foreach (var item in Model.Operators)
+        {
+            <ul>
+                <li>@item.OperatorID</li>
+                <li>@item.LastName</li>
+
+            </ul>
+        }
+
+
+        @*<div class="card d-none d-xl-block m-3  ">
+        <div class="card-body ">
+            @foreach (var item in Model.WorkStations)
+            {
+                @if (!(item.WorkStationName == "No Data")) {
+                <div class="card-header bg-dark">
+                    <h5 class="text-center text-white">@item.WorkStationName </h5>
+               </div>
+
+                <div class="m-auto p-3">
+                    @foreach (var op in item.OperatorWorkstations)
+                    {
+                        <ul class="list-inline">
+                            <li class="list-inline-item font-weight-bold text-primary">ID: @op.Operator.OperatorID</li>
+                            <li class="list-inline-item"> @op.Operator.FirstName</li>
+                            <li class="list-inline-item"> @op.Operator.LastName</li>
+                        </ul>
+
+                    }
+                </div>
+                    }
+                }
+        </div>*@
+    </div>
+   
+    <hr />
+
+</div>

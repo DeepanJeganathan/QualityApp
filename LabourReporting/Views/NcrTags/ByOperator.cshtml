@@ -1,0 +1,121 @@
+﻿@model IEnumerable<LabourReporting.Models.NcrTag>
+
+@{
+    ViewData["Title"] = "ByOperator";
+}
+
+
+    <h1 class="display-4 text-center text-secondary p-2">Ncr Tags by Operator</h1>
+<div class="row  ">
+    <div class="col ">
+        <div class="card ">
+            <div class="card-body p-2 text-secondary">
+                <div class="card-header ">
+                    <h5 class="text-center">Details</h5>
+                </div>
+                <form asp-controller="Ncrtags" asp-action="byoperator" method="get">
+                    <div class="form-group form-inline m-2">
+                        <label class="font-weight-bold px-2">Operator: </label>
+                         <input type="number" class="form-control " name="id">
+                        <button  type="submit" class="btn btn-primary">Search </button>
+                    </div>
+                </form>
+                <table class="table table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date_Rej)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Disposition)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Item)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Colour)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Put_Up)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Qty)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Order_number)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Defect)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NcrComments)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SupervisorSignature)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.OperationNumber)
+                            </th>
+                            
+                            <th>
+                                @Html.DisplayNameFor(model => model.WorkStation)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date_Rej)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Disposition)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Item)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Colour)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Put_Up)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Qty)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order_number)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Defect)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NcrComments)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SupervisorSignature)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OperationNumber)
+                                </td>
+                                
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WorkStationId)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Tag_No">Edit</a> |
+                                    <a asp-action="Details" asp-route-id="@item.Tag_No">Details</a> |
+                                    <a asp-action="Delete" asp-route-id="@item.Tag_No">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+</div>

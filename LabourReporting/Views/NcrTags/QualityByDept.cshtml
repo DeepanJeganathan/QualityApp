@@ -1,0 +1,402 @@
+﻿@model LabourReporting.ViewModels.WorkStationNcrTagViewModel
+@{
+    ViewData["Title"] = "QualityByDept";
+}
+
+
+<h1 class="display-4 text-center text-secondary text-dark p-2">Flow @ViewBag.dept Quality</h1>
+
+<div col="10 ">
+    <div class="card mb-3">
+        <div class="card-body p-2 text-secondary">
+            <div class="card-header bg-warning">
+                <h5 class="text-center">Filter</h5>
+            </div>
+            <form asp-controller="ncrtags" asp-action="QualityByDept">
+                <div class="input-group ">
+                    <div class="form-row  mr-1 form-inline ">
+                        <div class="m-1 p-1 ">
+                            From  <input type="date" name="fromDate" placeholder="Year/Month/Day" class="form-control">
+                        </div>
+                        <div class="m-1 p-1 ">
+                            To  <input type="date" name="toDate" placeholder="Year/Month/Day" class="form-control ml-auto">
+                        </div>
+                       
+                    </div>
+                    
+                    <div class="form-row ">
+
+                        <div class="m-2 p-1">
+
+                            <button type="submit" class="bg-warning"> Search</button>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-2 ">
+    <div class="col-12 ">
+        <div class="card ">
+            <div class="card-body p-2 text-secondary">
+                <div class="card-header ">
+                    <h5 class="text-center">Defect Codes</h5>
+                </div>
+                <div class="col-10">
+                    <canvas id="FlowDefects" width="400" height="300"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="row mb-2 ">
+    <div class="col-12 ">
+        <div class="card ">
+            <div class="card-body p-2 text-secondary">
+                <div class="card-header ">
+                    <h5 class="text-center">Contamination</h5>
+                </div>
+                <div class="col-10">
+                    <canvas id="contamination" width="400" height="300"></canvas>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class=" col-12 ">
+        <div class="card mb-5">
+            <div class="card-body ">
+                <div class="card-header">
+                    <h5 class="text-center text-secondary">FT Blows by Operator <small>(30 days</small></h5>
+                </div>
+                <div class="row ">
+                    <div class="col-md-4 p-2  m-auto ">
+
+                        <canvas id="extruderOne" width="400" height="400"></canvas>
+
+                    </div>
+                    <div class="col-md-4 p-2 m-auto">
+                        <canvas id="extruderTwo" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row bg-white">
+    <div class="col-lg-6 ">
+
+        <h5 class="text-center">@ViewBag.extruderOne FT Data</h5>
+        <table class="table table-hover table-">
+            <thead class="bg-warning">
+
+
+                <tr>
+                    <th>
+                        item
+                    </th>
+
+
+
+                    <th>
+                        ncr comment
+                    </th>
+
+
+                    <th></th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.NcrTags)
+                {
+                    @if (item.WorkStationId == ViewBag.extruderOne)
+                    {
+                        <tr>
+                            <td class="font-weight-bold">
+                                @Html.DisplayFor(modelItem => item.Item)
+
+                                @Html.DisplayFor(modelItem => item.Colour)
+
+                                @Html.DisplayFor(modelItem => item.Put_Up)
+                            </td>
+
+
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NcrComments)
+                            </td>
+
+
+
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Tag_No"><i class="fas fa-search-plus  "></i></a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-6 overflow-auto">
+
+        <h5 class="text-center display-5">@ViewBag.extruderTwo FT Data</h5>
+        <table class="table table-hover">
+            <thead class="bg-warning">
+                <tr>
+                    <th>
+                        item
+                    </th>
+                    <th>
+                        ncr comment
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.NcrTags)
+                {
+                    @if (item.WorkStationId == ViewBag.extruderTwo)
+                    {
+                        <tr>
+                            <td class="font-weight-bold ">
+                                @Html.DisplayFor(modelItem => item.Item)
+
+                                @Html.DisplayFor(modelItem => item.Colour)
+
+                                @Html.DisplayFor(modelItem => item.Put_Up)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NcrComments)
+                            </td>
+                            <td>
+                                <a asp-action="Details" asp-route-id="@item.Tag_No"><i class="fas fa-search-plus "></i></a>
+
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+
+
+    </div>
+</div>
+
+<div class="row bg-white">
+    <div class="col-12 ">
+
+        <h5 class="display-4 text-center ">Contamination Info</h5>
+        <table class="table table-hover table-">
+            <thead class="bg-warning">
+
+
+                <tr>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        NCR No.
+                    </th>
+
+                    <th>
+                        AWG Size
+                    </th>
+                    <th>
+                        Compound
+                    </th>
+                    <th>
+                        Root Cause
+                    </th>
+                    <th>
+                        Second Level
+                    </th>
+                    <th>
+                        Comments
+                    </th>
+
+                    <th></th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.FtBreakdowns)
+                {
+                    
+                <tr>
+                    <td class="font-weight-bold">
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Ncr_No)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AWGSize)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Compound)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RootCause)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SecondLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Comments)
+                    </td>
+                   
+                </tr>
+                    
+                }
+            </tbody>
+        </table>
+    </div>
+
+    </div>
+
+
+
+    <script>
+
+
+     var Operators2101 =@Html.Raw(Json.Serialize(ViewBag.Operators2101 ));
+    var FtCount2101 =@Html.Raw(Json.Serialize( ViewBag.Ftcount2101 ));
+
+    var ctx = document.getElementById('extruderOne').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: Operators2101,
+            datasets: [{
+                label: '@ViewBag.extruderOne Ext ',
+                data: FtCount2101,
+                backgroundColor: ["#c45850","#t45850","#3e95cd","#ff22ff","#22fff6","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#t45850"]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: '@ViewBag.extruderOne Blows by Operator'
+            }
+        }
+    });
+    </script>
+
+    <script>
+
+
+     var Operators2102 =@Html.Raw(Json.Serialize(ViewBag.Operators2102 ));
+    var FtCount2102 =@Html.Raw(Json.Serialize( ViewBag.Ftcount2102 ));
+
+    var ctx = document.getElementById('extruderTwo').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: Operators2102,
+            datasets: [{
+                label: '@ViewBag.extruderTwo ext ',
+                data: FtCount2102,
+               backgroundColor: [ "#00Bfff","#8e5ea2","	#7B68EE","#3cba9f","#e8c3b9","#c45850","#t45850","#3e95cd","#ff22ff","#22fff6","#099fff"]
+
+
+            }]
+        },
+         options: {
+      title: {
+        display: true,
+        text: '@ViewBag.extruderTwo Blows by Operator'
+      }
+    }
+    });
+    </script>
+
+
+
+
+    <script>
+
+
+     var defectCodes =@Html.Raw(Json.Serialize(ViewBag.Defects30Days) );
+    var defectCounts =@Html.Raw(Json.Serialize( ViewBag.Defects30DaysCount ));
+
+    var ctx = document.getElementById('FlowDefects').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: defectCodes,
+            datasets: [{
+                label: 'Flow  @ViewBag.dept defects ',
+                data: defectCounts,
+                backgroundColor: "#DC143C",
+
+                borderColor:
+                    '#000',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+    <script>
+
+
+     var ContaminationType =@Html.Raw(Json.Serialize(ViewBag.ContaminationType) );
+    var ContaminationCount =@Html.Raw(Json.Serialize( ViewBag.ContaminationTypeCount ));
+
+    var ctx = document.getElementById('contamination').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ContaminationType,
+            datasets: [{
+                label: 'Contamination ',
+                data: ContaminationCount,
+                backgroundColor:"#004dff",
+
+                borderColor:
+                    '#000',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 5
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+

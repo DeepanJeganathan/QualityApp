@@ -1,0 +1,400 @@
+﻿@model IEnumerable<LabourReporting.Models.LengthVariance>
+
+@{
+    ViewData["Title"] = "LVByMachineNum";
+}
+
+<h1 class="display-4 text-center p-2">Length Variance By Flow</h1>
+
+    <div col="10 ">
+        <p >
+            <a class="btn btn-primary " data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+               Add Filter
+            </a>
+
+        </p>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="card ">
+                    <div class="card-body p-2 text-secondary">
+                        <div class="card-header bg-primary mb-4 ">
+                            <h6 class="text-center text-white">Enter Filter Criteria</h6>
+                        </div>
+                        <form asp-controller="ncrtags" asp-action="LVByMachineNum">
+                            <div class="input-group ">
+                                <div class="form-row mr-1 ">
+                                    <div class="col ">
+                                        From:<input type="date" name="fromDate" placeholder="Year/Month/Day" class="form-control">
+                                    </div>
+                                    <div class="col">
+                                        To:<input type="date" name="toDate" placeholder="Year/Month/Day" class="form-control ml-auto">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col">
+                                        &nbsp; Defect Code:<input type="text" name="defect" class="form-control">
+                                    </div>
+                                    <div class="col">
+                                        Value Min:<input type="number" name="valueMin" class="form-control">
+
+                                    </div>
+                                    <div class="col">
+                                        Value Max<input type="number" name="valueMax" class="form-control">
+
+                                    </div>
+                                </div>
+                                <div class="form-row ">
+                                    <div class="col pt-2 m-3">
+                                        <button type="submit"> Search</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card mb-5 mt-2">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 p-1 mb-3 ">
+
+                    <canvas id="flow2" width="400" height="400"></canvas>
+
+                </div>
+                <div class="col-md-4 p-1">
+                    <canvas id="flow3" width="400" height="400"></canvas>
+                </div>
+                <div class="col-md-4 p-1">
+                    <canvas id="flow4" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-5">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8 p-1 mb-3 ">
+
+                    <canvas id="flowLvDollars" width="400" height="300"></canvas>
+                </div>
+                <div class="col-4">
+
+                    <table class="table">
+
+                        <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Total</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+
+                                <td class="text-secondary ">Flow 2</td>
+                                <td><i class="fas fa-dollar-sign text-danger  fa-1x">@ViewBag.Flow2LvDollarsSum</i></td>
+                            </tr>
+                            <tr>
+
+                                <td class="text-secondary ">Flow 3</td>
+                                <td><i class="fas fa-dollar-sign text-danger  fa-1x">@ViewBag.Flow3LvDollarsSum</i></td>
+                            </tr>
+                            <tr>
+
+                                <td class="text-secondary ">Flow 4</td>
+                                <td><i class="fas fa-dollar-sign text-danger  fa-1x">@ViewBag.Flow4LvDollarsSum</i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+<div class="row">
+    <div class="col-md-6 col-lg-6 mx-auto col-xl-4 p-1">
+        <div class="card">
+            <div class="card-body">
+                <canvas id="defectCodes" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 overflow-auto">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-responsive bg-white table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Item)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Qty)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.UOM)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Order_number)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.LotNo)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Value)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cell)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DefectCode)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.WorkStationId)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Comments)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Item)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Qty)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UOM)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Order_number)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.LotNo)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Cell)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DefectCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WorkStationId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Comments)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+     var F2Workstations =@Html.Raw(Json.Serialize(ViewBag.F2Workstations));
+    var F2LVCount =@Html.Raw(Json.Serialize( ViewBag.F2LvCount));
+
+    var ctx = document.getElementById('flow2').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F2Workstations,
+            datasets: [{
+                label: 'Flow 2 LV Count ',
+                data: F2LVCount,
+                backgroundColor:'rgba(255, 99, 132, 0.2)',
+
+                borderColor:
+                    'rgba(255, 99, 132, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<script>
+
+    var Flow2LvDollars =@Html.Raw(Json.Serialize(ViewBag.Flow2LvDollars));
+    var Flow3LvDollars =@Html.Raw(Json.Serialize(ViewBag.Flow3LvDollars));
+    var Flow4LvDollars =@Html.Raw(Json.Serialize(ViewBag.Flow4LvDollars));
+    var MonthsLV =@Html.Raw(Json.Serialize( ViewBag.MonthsLV));
+
+    var ctx = document.getElementById('flowLvDollars').getContext('2d');
+   
+    var F2Chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: MonthsLV,
+            datasets: [{
+                label: ' flow 2 LV Dollars ',
+                data: Flow2LvDollars,
+                fill: false,
+                borderColor:
+                    'rgb(255, 99, 132)',
+                backgroundColor:'rgb(255, 99, 132)',
+                 borderWidth: 2
+            },
+
+                {
+                label: 'flow 3 LV Dollars ',
+                data: Flow3LvDollars,
+                fill: false,
+                borderColor:
+                    'rgb(54, 162, 235)',
+                backgroundColor:'rgb(54, 162, 235)',
+                borderWidth: 2
+                },
+                {
+                label: 'flow 4 LV Dollars ',
+                data: Flow4LvDollars,
+                fill: false,
+                borderColor:
+                        'rgb(75, 192, 192)',
+                backgroundColor:   'rgb(75, 192, 192)',
+
+                borderWidth: 2
+            }
+
+            ]
+        },options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: false,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<script>
+         var F3Workstations =@Html.Raw(Json.Serialize(ViewBag.F3Workstations));
+        var F3LVCount =@Html.Raw(Json.Serialize( ViewBag.F3LvCount));
+
+        var ctx = document.getElementById('flow3').getContext('2d');
+    var F3Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F3Workstations,
+            datasets: [{
+                label: 'Flow 3 LV Count ',
+                data: F3LVCount,
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+
+                borderColor:
+                     'rgba(255, 159, 64, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+</script>
+<script>
+        var F4Workstations =@Html.Raw(Json.Serialize(ViewBag.F4Workstations));
+        var F4LVCount =@Html.Raw(Json.Serialize( ViewBag.F4LvCount));
+
+        var ctx = document.getElementById('flow4').getContext('2d');
+    var F4Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F4Workstations,
+            datasets: [{
+                label: 'Flow 4 LV Count ',
+                data: F4LVCount,
+                backgroundColor:'rgba(54, 162, 235, 0.2)',
+
+                borderColor:
+                    'rgba(54, 162, 235, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
+
+                    }
+                }]
+            }
+        }
+    });
+</script>
+
+<script>
+        var DefectCodes =@Html.Raw(Json.Serialize(ViewBag.DefectCode));
+        var Count =@Html.Raw(Json.Serialize( ViewBag.DefectCodeCount));
+
+        var ctx = document.getElementById('defectCodes').getContext('2d');
+    var DefectCodesChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: DefectCodes,
+            datasets: [{
+                label: 'Top 10 LV Defect Codes ',
+                data: Count,
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850","#00FFFF","#FF69B4","#48D1CC","#2E8B57","#00FF00"],
+
+                borderColor:
+                    'rgba(54, 162, 235, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+      title: {
+        display: true,
+        text: 'Top 10 LV Defect Codes'
+      }
+    }
+    });
+</script>

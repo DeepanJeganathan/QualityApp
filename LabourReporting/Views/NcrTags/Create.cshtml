@@ -1,0 +1,96 @@
+﻿@model LabourReporting.Models.NcrTag
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>NcrTag</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Tag_No" class="control-label"></label>
+                <input asp-for="Tag_No" class="form-control" />
+                <span asp-validation-for="Tag_No" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date_Rej" class="control-label"></label>
+                <input asp-for="Date_Rej" class="form-control" />
+                <span asp-validation-for="Date_Rej" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Disposition" class="control-label"></label>
+                <input asp-for="Disposition" class="form-control" />
+                <span asp-validation-for="Disposition" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Item" class="control-label"></label>
+                <input asp-for="Item" class="form-control" />
+                <span asp-validation-for="Item" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Colour" class="control-label"></label>
+                <input asp-for="Colour" class="form-control" />
+                <span asp-validation-for="Colour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Put_Up" class="control-label"></label>
+                <input asp-for="Put_Up" class="form-control" />
+                <span asp-validation-for="Put_Up" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Qty" class="control-label"></label>
+                <input asp-for="Qty" class="form-control" />
+                <span asp-validation-for="Qty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Order_number" class="control-label"></label>
+                <input asp-for="Order_number" class="form-control" />
+                <span asp-validation-for="Order_number" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Defect" class="control-label"></label>
+                <input asp-for="Defect" class="form-control" />
+                <span asp-validation-for="Defect" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NcrComments" class="control-label"></label>
+                <input asp-for="NcrComments" class="form-control" />
+                <span asp-validation-for="NcrComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SupervisorSignature" class="control-label"></label>
+                <input asp-for="SupervisorSignature" class="form-control" />
+                <span asp-validation-for="SupervisorSignature" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperationNumber" class="control-label"></label>
+                <input asp-for="OperationNumber" class="form-control" />
+                <span asp-validation-for="OperationNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OperatorId" class="control-label"></label>
+                <select asp-for="OperatorId" class ="form-control" asp-items="ViewBag.OperatorId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="WorkStationId" class="control-label"></label>
+                <select asp-for="WorkStationId" class ="form-control" asp-items="ViewBag.WorkStationId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

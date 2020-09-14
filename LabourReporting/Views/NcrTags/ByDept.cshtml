@@ -1,0 +1,14 @@
+﻿@model IEnumerable<LabourReporting.Models.NcrTag>
+
+@{
+    ViewData["Title"] = "ByDept";
+}
+
+<h1>ByDept</h1>
+
+@foreach (var item in Model)
+{
+    @item.Disposition
+    @item.NcrComments
+}
+

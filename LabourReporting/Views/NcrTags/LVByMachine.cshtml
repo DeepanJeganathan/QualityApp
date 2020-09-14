@@ -1,0 +1,223 @@
+﻿@model IEnumerable<LabourReporting.Models.NcrTag>
+@{
+    ViewData["Title"] = "LVByMachine";
+}
+
+<h1 class="display-4 text-center p-2">Length Variance By Flow</h1>
+<div class="card mb-5">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4 p-1 mb-3 ">
+
+                <canvas id="flow2" width="400" height="400"></canvas>
+
+            </div>
+            <div class="col-md-4 p-1">
+                <canvas id="flow3" width="400" height="400"></canvas>
+            </div>
+            <div class="col-md-4 p-1">
+                <canvas id="flow4" width="400" height="400"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mx-auto col-xl-4 p-1">
+        <div class="card">
+            <div class="card-body">
+                <canvas id="defectCodes" width="400" height="400"></canvas>
+                </div>
+            </div>
+            </div>
+            <div class="col-xl-8 overflow-auto">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Item)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Order_number)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Qty)
+                                    </th>
+
+                                    <th class="d-none  d-xl-table-cell"  scope="col">
+                                        @Html.DisplayNameFor(model => model.NcrComments)
+                                    </th>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.WorkStation)
+                                    </th>
+                                    <th></th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="font-weight-bold">
+                                            @Html.DisplayFor(modelItem => item.Item)
+
+                                            @Html.DisplayFor(modelItem => item.Colour)
+
+                                            @Html.DisplayFor(modelItem => item.Put_Up)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Order_number)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Qty)
+                                        </td>
+
+                                        <td class="d-none d-xl-table-cell "  scope="col">
+                                            @Html.DisplayFor(modelItem => item.NcrComments)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.WorkStationId)
+                                        </td>
+                                        <td>
+                                        
+
+                                        <td>
+                                            <a asp-action="Details" asp-route-id="@item.Tag_No"><i class="fas fa-search-plus fa-lg"></i></a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+
+     var F2Workstations =@Html.Raw(Json.Serialize(ViewBag.F2Workstations));
+    var F2LVCount =@Html.Raw(Json.Serialize( ViewBag.F2LvCount));
+
+    var ctx = document.getElementById('flow2').getContext('2d');
+    var F2Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F2Workstations,
+            datasets: [{
+                label: 'Flow 2 LV Count ',
+                data: F2LVCount,
+                backgroundColor:'rgba(255, 99, 132, 0.2)',
+
+                borderColor:
+                    'rgba(255, 99, 132, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+        </script>
+        <script>
+         var F3Workstations =@Html.Raw(Json.Serialize(ViewBag.F3Workstations));
+        var F3LVCount =@Html.Raw(Json.Serialize( ViewBag.F3LvCount));
+
+        var ctx = document.getElementById('flow3').getContext('2d');
+    var F3Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F3Workstations,
+            datasets: [{
+                label: 'Flow 3 LV Count ',
+                data: F3LVCount,
+                backgroundColor: 'rgba(255, 159, 64, 0.2)',
+
+                borderColor:
+                     'rgba(255, 159, 64, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    });
+        </script>
+        <script>
+        var F4Workstations =@Html.Raw(Json.Serialize(ViewBag.F4Workstations));
+        var F4LVCount =@Html.Raw(Json.Serialize( ViewBag.F4LvCount));
+
+        var ctx = document.getElementById('flow4').getContext('2d');
+    var F4Chart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: F4Workstations,
+            datasets: [{
+                label: 'Flow 4 LV Count ',
+                data: F4LVCount,
+                backgroundColor:'rgba(54, 162, 235, 0.2)',
+
+                borderColor:
+                    'rgba(54, 162, 235, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 1,
+
+                    }
+                }]
+            }
+        }
+    });
+        </script>
+
+        <script>
+        var DefectCodes =@Html.Raw(Json.Serialize(ViewBag.DefectCode));
+        var Count =@Html.Raw(Json.Serialize( ViewBag.DefectCodeCount));
+
+        var ctx = document.getElementById('defectCodes').getContext('2d');
+    var DefectCodesChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: DefectCodes,
+            datasets: [{
+                label: 'Top 5 LV Defect Codes ',
+                data: Count,
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+
+                borderColor:
+                    'rgba(54, 162, 235, 1)',
+
+                borderWidth: 1
+            }]
+        },
+        options: {
+      title: {
+        display: true,
+        text: 'Top 5 LV Defect Codes'
+      }
+    }
+    });
+        </script>

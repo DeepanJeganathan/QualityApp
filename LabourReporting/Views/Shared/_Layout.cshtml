@@ -1,0 +1,143 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - LabourReporting</title>
+
+    <environment include="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link href="~/css/Bootstrap.custom.min.css" rel="stylesheet" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+              crossorigin="anonymous"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" />
+    </environment>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://kit.fontawesome.com/ea0354e0ff.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark sticky-top  flex-md-nowrap p-0 shadow" style="background-color:black;" id="Labour-Nav">
+        <a class="navbar-brand col-sm-3 col-md-2 mr-0 font-weight-bold" href="#"
+> <img style="width:70%; height:70%; " src="~/images/belden.png" /></a>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+        <ul class="navbar-nav px-3">
+            <li class="nav-item text-nowrap">
+                <a class="nav-link" href="#">Sign out</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="container-fluid">
+           <div class="row ">
+            <nav class="col-md-2 d-none d-md-block sidebar " style="height:100%; position:absolute; background-color:#323232;" id="Labour-Nav" >
+                <div class="sidebar-sticky " >
+                    <ul class="navbar-nav flex-column p-1   ">
+                        <li class="nav-item mb-2 p-3 text-white ">
+                            
+                            <i class="fas fa-tachometer-alt fa-lg text-white"> NCR reports</i>
+                              <span class="sr-only">(current)</span>
+                          
+                        </li>
+                        <li class="nav-item p-2  mb-2">
+                            <a>
+                                 Quality Issues by Dept
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    
+                                    <li class="nav-item p-2">
+                                        <a  asp-controller="NcrTags" asp-action="qualitybydept" asp-route-dept=2>Flow 2 Report</a>
+                                    </li>
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="qualitybydept" asp-route-dept=3>Flow 3 Report</a>
+                                    </li>
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="qualitybydept" asp-route-dept=4>Flow 4 Report</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li class="nav-item p-2 mb-2">
+                            <a  asp-controller="NcrTags" asp-action="lvbymachinenum">
+                                <i class="far fa-file-excel"></i> Length Variances By Machine
+                            </a>
+                        </li>
+                        <li class="nav-item p-2 mb-2">
+                            <a asp-controller="NcrTags" asp-action="ByOperator">
+                                <i class="fas fa-file-contract"></i> By Operator
+                            </a>
+                        </li>
+
+                        <li class="nav-item p-2 mb-2">
+                            <a asp-controller="Workstations" asp-action="index">
+                                <i class="fas fa-file-contract"></i> WorkStation List
+                            </a>
+                        </li>
+                        <li class="nav-item  p-2 mb-2">
+                            <a >
+                                NCR Database
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="index" asp-route-filter="Scrap">Scrap</a>
+                                    </li>
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="index" asp-route-filter="LV">Length Variance</a>
+                                    </li>
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="index" asp-route-filter="Rework">Rework</a>
+                                    </li>
+                                    <li class="nav-item p-2">
+                                        <a asp-controller="NcrTags" asp-action="index" >Full List</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-10 ml-sm-auto col-lg-10 px-5 bg-light">
+                <partial name="_CookieConsentPartial" />
+
+                @RenderBody()
+
+            </main>
+        </div>
+
+
+    </div>
+    
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    </environment>
+    <environment exclude="Development">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o">
+        </script>
+    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
